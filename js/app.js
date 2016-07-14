@@ -120,7 +120,6 @@ function getTop(tagged) {
 	//	var searchResults = showLeader(result)
 		console.log(result);
 		for (i=0; i< result.items.length; i++) {
-
 		var name = result.items[i].user.display_name;
 		var postCount = result.items[i].post_count;
 		var score = result.items[i].score;
