@@ -1,3 +1,25 @@
+
+$(document).ready( function() {
+	$('.unanswered-getter').submit( function(e){
+		e.preventDefault();
+		// zero out results if previous search has run
+		$('.results').html('');
+		// get the value of the tags the user submitted
+		var tags = $(this).find("input[name='tags']").val();
+		getUnanswered(tags);
+			getTop(tags);
+
+	});
+
+	//user can submit to search for the top answerers for a given search term on stackoverflow
+
+	//if there is a result for the search, update the css
+});
+
+
+
+
+
 // this function takes the question object returned by the StackOverflow request
 // and returns new result to be appended to DOM
 var showQuestion = function(question) {
@@ -66,6 +88,7 @@ var getUnanswered = function(tags) {
 	})
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
 		var searchResults = showSearchResults(request.tagged, result.items.length);
+		console.log(result);
 
 		$('.search-results').html(searchResults);
 		//$.each is a higher order function. It takes an array and a function as an argument.
@@ -81,14 +104,32 @@ var getUnanswered = function(tags) {
 	});
 };
 
+function getTop(tagged) {
 
-$(document).ready( function() {
-	$('.unanswered-getter').submit( function(e){
-		e.preventDefault();
-		// zero out results if previous search has run
-		$('.results').html('');
-		// get the value of the tags the user submitted
-		var tags = $(this).find("input[name='tags']").val();
-		getUnanswered(tags);
+	var request = { 
+		site: 'stackoverflow'
+	};
+	
+	$.ajax({
+		url: "http://api.stackexchange.com/2.2/tags/"+tagged+"/top-answerers/all_time",
+		data: request,
+		dataType: "jsonp",//use jsonp to avoid cross origin issues
+		type: "GET"
+	})
+	.done(function(result){ //this waits for the ajax to return with a succesful promise object
+	//	var searchResults = showLeader(result)
+		console.log(result);
+		for (i=0; i< result.items.length; i++) {
+
+		var name = result.items[i].user.display_name;
+		var postCount = result.items[i].post_count;
+		var score = result.items[i].score;
+		var link = result.items[i].user.link;
+		console.log(name, postCount, score, link);
+		}
+	})
+	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
 	});
-});
+}
