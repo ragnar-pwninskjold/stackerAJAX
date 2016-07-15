@@ -1,13 +1,22 @@
 
 $(document).ready( function() {
-	$('.unanswered-getter').submit( function(e){
-		e.preventDefault();
+	$('.unanswered-getter').submit( function(event){
+		event.preventDefault();
 		// zero out results if previous search has run
 		$('.results').html('');
 		// get the value of the tags the user submitted
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
-			getTop(tags);
+
+	});
+
+	$('.inspiration-getter').submit( function(event){
+		event.preventDefault();
+		// zero out results if previous search has run
+		$('.results').html('');
+		// get the value of the tags the user submitted
+		var ans = $(this).find("input[name='answerers']").val();
+		getTop(ans);
 
 	});
 
@@ -22,22 +31,19 @@ $(document).ready( function() {
 function showTop(result) {
 
 	var topAnswerer = $('.top-answerer').clone();
-	console.log(result);
-	console.log(result.user.display_name);
-	console.log(result.post_count);
-	console.log(result.score);
-	console.log(result.user.link);
+	
 	// Set the name properties in result
 	var nameElem = topAnswerer.find('.name');
 	nameElem.text(result.user.display_name);
+	console.log(result.user.display_name)
 	// set the post count property in result
 	var postElem = topAnswerer.find('.post-count');
 	postElem.text(result.post_count);
-
+	console.log(result.post_count);
 	// set the user score property property in result
 	var scoreElem = topAnswerer.find('.user-score');
 	scoreElem.text(result.score);
-
+	console.log(result.score);
 	// set some properties related to asker
 	/*var link = topAnswerer.find('.link');
 	link.html('<a target="_blank" '+
@@ -150,9 +156,13 @@ function getTop(tagged) {
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
 	//	var searchResults = showLeader(result)
 		//$.each(result.items, function(i, item) {
-			var top = showTop(result.items[0]);
+			$.each(result.items, function(i, item) {
+
 			//console.log(top);
-			$(".results").append(top);
+			$(".results").append(showTop(item));
+			});
+
+			
 		//});
 		//var name = result.items[i].user.display_name;
 		//var postCount = result.items[i].post_count;
