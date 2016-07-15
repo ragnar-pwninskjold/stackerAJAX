@@ -34,15 +34,12 @@ function showTop(result) {
 	var name = topAnswerer.find('.name');
 	name.text(result.user.display_name);
 	//name.text(result.user.display_name);
-	console.log(result.user.display_name);
 	// set the post count property in result
 	//var postElem = $('div.post-count');
 	//postElem.text(result.post_count);
-	console.log(result.post_count);
 	// set the user score property property in result
 	//var scoreElem = $('div.user-score');
 	//scoreElem.text(result.score);
-	console.log(result.score);
 
 	//$(".results").append();
 	// set some properties related to asker
@@ -157,11 +154,12 @@ function getTop(tagged) {
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
 	//	var searchResults = showLeader(result)
 		//$.each(result.items, function(i, item) {
-			//$.each(result.items, function(i, item) {
+			console.log(result);
+			$.each(result.items, function(i, item) {
 
 			//console.log(top);
-			$(".results").append(showTop(result.items[0]));
-			//});
+			$(".results").append(showTop(item));
+			});
 
 			
 		//});
