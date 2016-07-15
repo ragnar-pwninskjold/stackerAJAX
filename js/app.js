@@ -19,6 +19,36 @@ $(document).ready( function() {
 
 
 
+function showTop(result) {
+
+	var topAnswerer = $('.top-answerer').clone();
+	console.log(result);
+	console.log(result.user.display_name);
+	console.log(result.post_count);
+	console.log(result.score);
+	console.log(result.user.link);
+	// Set the name properties in result
+	var nameElem = topAnswerer.find('.name');
+	nameElem.text(result.user.display_name);
+	// set the post count property in result
+	var postElem = topAnswerer.find('.post-count');
+	postElem.text(result.post_count);
+
+	// set the user score property property in result
+	var scoreElem = topAnswerer.find('.user-score');
+	scoreElem.text(result.score);
+
+	// set some properties related to asker
+	/*var link = topAnswerer.find('.link');
+	link.html('<a target="_blank" '+
+		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
+		question.owner.display_name +
+		'</a></p>' +
+		'<p>Reputation: ' + question.owner.reputation + '</p>'
+	);
+*/
+	return topAnswerer;
+}
 
 // this function takes the question object returned by the StackOverflow request
 // and returns new result to be appended to DOM
@@ -60,6 +90,7 @@ var showSearchResults = function(query, resultNum) {
 	var results = resultNum + ' results for <strong>' + query + '</strong>';
 	return results;
 };
+
 
 // takes error string and turns it into displayable DOM element
 var showError = function(error){
@@ -118,14 +149,18 @@ function getTop(tagged) {
 	})
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
 	//	var searchResults = showLeader(result)
-		console.log(result);
-		for (i=0; i< result.items.length; i++) {
-		var name = result.items[i].user.display_name;
-		var postCount = result.items[i].post_count;
-		var score = result.items[i].score;
-		var link = result.items[i].user.link;
-		console.log(name, postCount, score, link);
-		}
+		//$.each(result.items, function(i, item) {
+			var top = showTop(result.items[0]);
+			//console.log(top);
+			$(".results").append(top);
+		//});
+		//var name = result.items[i].user.display_name;
+		//var postCount = result.items[i].post_count;
+		//var score = result.items[i].score;
+		//var link = result.items[i].user.link;
+		//console.log(name, postCount, score, link);
+
+		
 	})
 	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
 		var errorElem = showError(error);
