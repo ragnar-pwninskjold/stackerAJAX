@@ -43,7 +43,7 @@ var showQuestion = function(question) {
 
 	// set some properties related to asker
 	var asker = result.find('.asker');
-	asker.html('<p>Name: <a target="_blank" '+
+	asker.html('<a target="_blank" '+
 		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
 		question.owner.display_name +
 		'</a></p>' +
@@ -121,11 +121,11 @@ function getTop(tagged) {
 		console.log(result);
 		for (i=0; i< result.items.length; i++) {
 
-		var name = result.items[i].user.display_name;
-		var postCount = result.items[i].post_count;
-		var score = result.items[i].score;
-		var link = result.items[i].user.link;
-		console.log(name, postCount, score, link);
+		//var name = result.items[i].user.display_name;
+		//var postCount = result.items[i].post_count;
+		//var score = result.items[i].score;
+		//var link = result.items[i].user.link;
+		console.log(result);
 		}
 	})
 	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
