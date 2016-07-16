@@ -43,7 +43,7 @@ var showTop = function(result) {
 
     var link = topAnswerer.find('.link');
     link.html('<a target="_blank" '+
-        'href=' + result.user.link + ">Check Out This User's Page" +
+        'href=https://stackoverflow.com/users/'+ result.user.user_id + "/" + result.user.display_name + ">Check Out This User's Page" +
         '</a>');
 
     return topAnswerer;
