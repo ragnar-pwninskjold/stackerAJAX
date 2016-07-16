@@ -28,30 +28,25 @@ $(document).ready( function() {
 
 
 
-function showTop(result) {
-	var topAnswerer = $('.top-answerer').clone();
-	// Set the name properties in result
-	var name = topAnswerer.find('.name');
-	name.text(result.user.display_name);
-	//name.text(result.user.display_name);
-	// set the post count property in result
-	//var postElem = $('div.post-count');
-	//postElem.text(result.post_count);
-	// set the user score property property in result
-	//var scoreElem = $('div.user-score');
-	//scoreElem.text(result.score);
+var showTop = function(result) {
+    var topAnswerer = $('.templates .top-answerer').clone();
+    // Set the name properties in result
+    var name = topAnswerer.find('.name');
+    name.text(result.user.display_name);
+    //name.text(result.user.display_name);
+    // set the post count property in result
+    var postElem = topAnswerer.find('.post-count');
+    postElem.text(result.post_count);
+    // set the user score property property in result
+    var scoreElem = topAnswerer.find('.user-score');
+    scoreElem.text(result.score);
 
-	//$(".results").append();
-	// set some properties related to asker
-	/*var link = topAnswerer.find('.link');
-	link.html('<a target="_blank" '+
-		'href=http://stackoverflow.com/users/' + question.owner.user_id + ' >' +
-		question.owner.display_name +
-		'</a></p>' +
-		'<p>Reputation: ' + question.owner.reputation + '</p>'
-	);
-*/
-	return topAnswerer;
+    var link = topAnswerer.find('.link');
+    link.html('<a target="_blank" '+
+        'href=' + result.user.link + ">Check Out This User's Page" +
+        '</a>');
+
+    return topAnswerer;
 }
 
 // this function takes the question object returned by the StackOverflow request
@@ -160,16 +155,6 @@ function getTop(tagged) {
 			//console.log(top);
 			$(".results").append(showTop(item));
 			});
-
-			
-		//});
-		//var name = result.items[i].user.display_name;
-		//var postCount = result.items[i].post_count;
-		//var score = result.items[i].score;
-		//var link = result.items[i].user.link;
-		//console.log(name, postCount, score, link);
-
-		
 	})
 	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
 		var errorElem = showError(error);
